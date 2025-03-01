@@ -1,9 +1,11 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, createReducer } from '@reduxjs/toolkit';
 import loginReducer from './slice/userSlice'
+import productReducer from './slice/productsSlice'
 
 export const store = configureStore({
     reducer: {
         login: loginReducer,
+        products: productReducer
     },
 });
 

@@ -34,7 +34,7 @@ const Services = () => {
             sm:grid-cols-2 lg:grid-cols-3">
                 {servicesData.map((service, index) => (
                     <div key={index} className="p-6 flex flex-col items-center text-center">
-                        <div className="bg-gray-800 text-white p-4 rounded-full mb-4 relative z-10 shadow-[0_0_0_5px_rgba(233,233,233,1),_0_0_0_10px_rgba(233,233,233,1)]">
+                        <div className="bg-ashBrown text-white p-4 rounded-full mb-4 relative z-10 shadow-[0_0_0_5px_rgba(233,233,233,1),_0_0_0_10px_rgba(233,233,233,1)]">
                             {service.icon}
                         </div>
                         <h3 className="text-xl font-semibold text-gray-800 mb-2">

@@ -1,8 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product }: any) => {
+
+    const navigate = useNavigate();
+
+    const handleCardClick = () => {
+        navigate(`/productdescription/${product?.id}`)
+    }
+
     return (
-        <div className="p-4 flex flex-col items-center justify-between h-[400px] bg-white ">
+        <div onClick={handleCardClick}
+            className="p-4 flex flex-col items-center justify-between h-[400px] bg-white ">
             <img
                 src={product.image}
                 alt={product.title}

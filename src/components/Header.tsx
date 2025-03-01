@@ -1,11 +1,70 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import Images from '../assets/images';
 import { clearLogin } from '../store/slice/userSlice';
+import { useEffect, useRef, useState } from 'react';
+import { getCategories } from '../api/categories';
 
-const Header = () => {
+const Header = ({ searchTerm, setSearchTerm }: any) => {
     const token = useAppSelector((state: any) => state.login.token);
     const dispatch = useAppDispatch();
+
+    const [categories, setCategories] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    const searchBoxRef: any = useRef(null);
+
+    const navigate = useNavigate();
+
+    const fetchCategories = async () => {
+        try {
+            const response = await getCategories();
+            if (response) {
+                setCategories(response);
+            } else {
+                console.log("failed to load categories")
+            }
+        } catch (error) {
+            console.log("Failed to load categories", error)
+        }
+    }
+
+    const handleInputFocus = () => {
+        fetchCategories();
+        setShowSuggestions(true);
+    }
+
+    const handleInputChange = (e: any) => {
+        const value = e.target.value;
+        setInputValue(value);
+        setSearchTerm(value);
+    }
+
+    const handleSuggestionClick = (category: any) => {
+        setInputValue(category);
+        setShowSuggestions(false);
+        setSearchTerm(category);
+    }
+
+    const handleTitleClick = () => {
+        setInputValue('');
+        setSearchTerm('');
+        navigate('/')
+    }
+
+    const handleClickOutside = (event: any) => {
+        if (searchBoxRef.current && !searchBoxRef.current.contains(event.target)) {
+            setShowSuggestions(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, []);
 
     const handleLogout = () => {
         dispatch(clearLogin());
@@ -14,10 +73,7 @@ const Header = () => {
     return (
         <header className='bg-primaryColor flex justify-between 
         items-center p-2 sm:p-4 flex-wrap '>
-            <h1 className="text-2xl font-bold text-gray-800
-            mr-auto cursor-pointer m:text-xl md:text-2xl">
-                ShopSpace
-            </h1>
+            <img onClick={handleTitleClick} src={Images.logo} className=' mr-auto cursor-pointer w-20' />
             <div className="flex items-center gap-4 flex-wrap">
                 <nav className='flex gap-6 items-center flex-wrap justify-center'>
                     <Link to="/" className='text-gray-800 text-sm font-medium 
@@ -25,17 +81,46 @@ const Header = () => {
                         HomePage
                     </Link>
                     <Link to="/" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
-                        Categories
-                    </Link>
-                    <Link to="/" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
                         ContactUs
                     </Link>
-                    <Link to="/" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
-                        More Options
-                    </Link>
+
+                    <div className="relative flex-1 max-w-3xl w-full " ref={searchBoxRef}>
+                        <div className="flex items-center border bg-white border-gray-300 rounded-full py-2 px-4">
+                            <input
+                                type="text"
+                                placeholder="What are you looking for?"
+                                className="w-full text-base focus:outline-none"
+                                value={inputValue}
+                                onFocus={handleInputFocus}
+                                onChange={handleInputChange}
+                            />
+                            <span className="text-gray-600 text-xl">
+                                <img src={Images.searchicon} />
+                            </span>
+                        </div>
+                        {showSuggestions && categories.length > 0 && (
+                            <ul className="absolute top-full left-0 w-full border bg-white border-gray-300 rounded-lg shadow-lg z-10 max-h-52 overflow-y-auto">
+                                {categories
+                                    .filter((category: any) =>
+                                        category.toLowerCase().includes(inputValue.toLowerCase())
+                                    )
+                                    .map((category) => (
+                                        <li
+                                            key={category}
+                                            className="p-3 cursor-pointer text-base hover:bg-gray-100"
+                                            onClick={() => handleSuggestionClick(category)}
+                                        >
+                                            {category}
+                                        </li>
+                                    ))}
+                            </ul>
+                        )}
+                    </div>
 
                     {token ? (
                         <>
+
+                            <img src={Images.carticon} />
                             <img src={Images.usericon} />
                             <Link onClick={handleLogout} to="/" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
                                 Logout
@@ -46,18 +131,9 @@ const Header = () => {
                             <Link to="/login" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
                                 Login
                             </Link>
-
                         </>
                     )}
                 </nav>
-
-                <div className="relative flex flex-1 max-w-lg w-full">
-                    <input type='text'
-                        placeholder='What are you looking for?'
-                        className='border border-gray-300 rounded-full pz-3 py-2 text-sm w-full 
-                    focus:outline-none focus:ring-2 focus:ring-gray-400'
-                    />
-                </div>
             </div>
         </header>
     )
