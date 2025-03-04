@@ -1,20 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppSelector } from '../store/hooks';
 import Images from '../assets/images';
-import { clearLogin } from '../store/slice/userSlice';
 import { useEffect, useRef, useState } from 'react';
 import { getCategories } from '../api/categories';
 
 const Header = ({ searchTerm, setSearchTerm }: any) => {
-    const token = useAppSelector((state: any) => state.login.token);
-    const dispatch = useAppDispatch();
-
     const [categories, setCategories] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
 
+    const cartCount = useAppSelector((state) => state.cart.count);
     const searchBoxRef: any = useRef(null);
-
     const navigate = useNavigate();
 
     const fetchCategories = async () => {
@@ -50,7 +46,7 @@ const Header = ({ searchTerm, setSearchTerm }: any) => {
     const handleTitleClick = () => {
         setInputValue('');
         setSearchTerm('');
-        navigate('/')
+        navigate('/');
     }
 
     const handleClickOutside = (event: any) => {
@@ -66,8 +62,8 @@ const Header = ({ searchTerm, setSearchTerm }: any) => {
         }
     }, []);
 
-    const handleLogout = () => {
-        dispatch(clearLogin());
+    const handleCart = () => {
+        navigate("/cart");
     }
 
     return (
@@ -78,9 +74,9 @@ const Header = ({ searchTerm, setSearchTerm }: any) => {
                 <nav className='flex gap-6 items-center flex-wrap justify-center'>
                     <Link to="/" className='text-gray-800 text-sm font-medium 
                     hover:text-gray-600 transition duration-300'>
-                        HomePage
+                        Home
                     </Link>
-                    <Link to="/" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
+                    <Link to="/contactus" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
                         ContactUs
                     </Link>
 
@@ -117,22 +113,14 @@ const Header = ({ searchTerm, setSearchTerm }: any) => {
                         )}
                     </div>
 
-                    {token ? (
-                        <>
-
-                            <img src={Images.carticon} />
-                            <img src={Images.usericon} />
-                            <Link onClick={handleLogout} to="/" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
-                                Logout
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <Link to="/login" className="text-gray-800 text-sm font-medium hover:text-gray-600 transition duration-300">
-                                Login
-                            </Link>
-                        </>
-                    )}
+                    <div className="cart relative mt-2 flex items-center cursor-pointer">
+                        <img src={Images.carticon} onClick={handleCart} />
+                        {cartCount > 0 && (
+                            <span className="cart-count absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                                {cartCount}
+                            </span>
+                        )}
+                    </div>
                 </nav>
             </div>
         </header>

@@ -7,7 +7,8 @@ const Images = {
     usericon: require('./usericon.png'),
     carticon: require('./carticon.png'),
     logo: require('./logo.png'),
-    searchicon: require('./searchicon.png')
+    searchicon: require('./searchicon.png'),
+    clearicon: require('./clearicon.png')
 }
 
 export default Images;

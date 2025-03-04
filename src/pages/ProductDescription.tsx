@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-// import { addToCart } from '../store/slices/cartSlice';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getProductById } from '../api/products';
 import Header from '../components/Header';
+import { addToCart, selectCartItems } from '../store/slice/cartSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import Footer from '../components/Footer';
 
 interface Product {
     category: string;
@@ -25,28 +26,32 @@ const ProductDescription = () => {
     const [product, setProduct] = useState<Product | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const cartItems = useAppSelector(selectCartItems);
 
     const fetchProductsById = async () => {
         try {
             const response = await getProductById(productId);
-            console.log("Responses", response)
             if (response) {
                 setProduct(response);
             } else {
-                console.log("Failed to get product")
+                console.error("Failed to get product");
             }
         } catch (error) {
-            console.log("Failed to get product", error)
+            console.error("Failed to get product", error);
         }
-    }
+    };
 
     useEffect(() => {
         if (productId) {
             fetchProductsById();
+            const productInCart = cartItems.find((item: any) => item.id === parseInt(productId, 10));
+            if (productInCart) {
+                setQuantity(productInCart.quantity);
+            }
         }
-    }, [])
+    }, [cartItems, productId]);
 
     const renderStars = (rating: any) => {
         const stars = [];
@@ -64,11 +69,16 @@ const ProductDescription = () => {
     const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
 
     const handleAddToCart = () => {
-        if (productId) {
-            // dispatch(addToCart({ ...product, quantity }));
+        const existingItem = cartItems.find((item: any) => item.id === parseInt(productId, 10));
+
+        const finalQuantity = existingItem ? quantity : quantity;
+
+        if (product) {
+            dispatch(addToCart({ ...product, quantity: finalQuantity }));
             navigate('/cart');
         }
     };
+
 
     return (
         <div>
@@ -132,6 +142,7 @@ const ProductDescription = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

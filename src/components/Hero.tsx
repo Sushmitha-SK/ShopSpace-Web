@@ -1,14 +1,20 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+    const navigate = useNavigate();
+
+    const handleLearnMore = () => {
+        navigate('/aboutus')
+    }
     return (
         <>
             <section className="flex h-screen w-full relative py-0">
                 <div className="flex-1 bg-darkColor"></div>
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center max-w-[60%] md:max-w-[80%] sm:max-w-[90%]">
                     <h1 className="lg:text-6xl leading-[32px] md:text-4xl font-bold text-gray-800 mb-4 sm:text-2xl">
-                        Explore <span className="underline">ShopSpace</span> <br />Your Hub for Exclusive Finds
+                        Explore <span className="underline">ShopSpace</span> <br />
                     </h1>
+                    <p className='lg:text-5xl leading-[32px] md:text-4xl font-bold text-gray-800 mb-4 sm:text-2xl'>Your Hub for Exclusive Finds</p>
                     <p className="text-lg lg:text-2xl text-gray-500 sm:text-sm">
                         Discover a curated selection of products tailored to your needs. Shop effortlessly and find exactly what you want.
                     </p>
@@ -29,7 +35,8 @@ const Hero = () => {
             border-white transition-colors duration-300 hover:bg-gray-100">
                             Shop
                         </button>
-                        <button className="text-white bg-transparent text-base py-3 px-8 rounded-lg border-2 border-white transition-colors duration-300 hover:bg-white hover:text-black">
+                        <button onClick={handleLearnMore}
+                            className="text-white bg-transparent text-base py-3 px-8 rounded-lg border-2 border-white transition-colors duration-300 hover:bg-white hover:text-black">
                             Learn More
                         </button>
                     </div>

@@ -1,7 +1,18 @@
+import { Link, useNavigate } from 'react-router-dom';
 import Images from '../assets/images'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const navigate = useNavigate();
+
+  const handlePrivacyPolicy = () => {
+    navigate('/privacypolicy')
+  }
+
+  const handleTermsOfUSe = () => {
+    navigate('/termsofuse')
+  }
 
   return (
     <footer className="bg-ashBrown text-white py-10 px-5">
@@ -31,20 +42,29 @@ const Footer = () => {
             Support
           </h3>
           <p className="text-sm leading-7">
-            1234 Park Street, <br />
-            DL-111111, India
+            123 Main Street, <br />
+            Suite 100, Cityville, <br/>
+            ST-56789
           </p>
-          <p className="text-sm underline mt-2">Test@testmail.com</p>
-          <p className="text-sm mt-2">+91-999-999-9999</p>
+          <p className="text-sm underline mt-2">support@example.com</p>
+          <p className="text-sm mt-2">+1-234-567-890</p>
         </div>
 
         <div>
           <h3 className="text-xl font-semibold mb-2">Account</h3>
           <ul className='space-y-2'>
-            <li>Privacy Policy</li>
-            <li>Terms of Use</li>
-            <li>FAQ</li>
-            <li>Contact</li>
+            <Link to='/privacypolicy'>
+              <li>Privacy Policy</li>
+            </Link>
+            <Link to='/termsofuse'>
+              <li >Terms of Use</li>
+            </Link>
+            <Link to="/faq">
+              <li>FAQ</li>
+            </Link>
+            <Link to="/contactus">
+              <li>Contact</li>
+            </Link>
           </ul>
         </div>
       </div>

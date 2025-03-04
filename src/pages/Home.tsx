@@ -19,12 +19,11 @@ const Home = () => {
         const fetchProducts = async () => {
             try {
                 const response = await getAllProducts();
-
                 if (response) {
                     setProducts(response);
                     dispatch(setProductsData(response));
                 } else {
-                    console.log("Failed to get products")
+                    console.log("Failed to get products");
                 }
             } catch (error) {
                 console.log("Failed to fetch products", error)
@@ -43,6 +42,7 @@ const Home = () => {
     return (
         <div>
             <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
             <Hero />
             <div className="mt-8 lg:mt-16 lg:mx-24">
                 <div className="border-l-4 border-lightCopper pl-4 ">
