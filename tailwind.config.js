@@ -15,9 +15,10 @@ module.exports = {
                 headingColor: "#181A1E",
                 textColor: "#4E545F",
                 customGreen: '#69B99D',
-                "ashBrown": "#615048",
-                "lightCopper": "#b78454",
-                "darkMocha": "#342623"
+                ashBrown: "#615048",
+                lightCopper: "#b78454",
+                darkMocha: "#342623",
+                blushWhite:"#f7f1f1",
             },
             ringColor: {
                 customGreen: '#69B99D',

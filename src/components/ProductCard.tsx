@@ -1,8 +1,44 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { addToCart } from '../store/slice/cartSlice';
+import { selectCartItems } from "../store/slice/cartSlice";
+
 
 const ProductCard = ({ product }: any) => {
+
+    const [isAddToCart, setIsAddToCart] = useState(false);
+
+    const cartItems = useAppSelector(selectCartItems);
+
+    useEffect(() => {
+        const isProductInCart = cartItems.some((item: any) => item.id === product.id);
+        setIsAddToCart(isProductInCart);
+    }, [cartItems, product.id]);
+
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const handleCardClick = () => {
+        navigate(`/productdescription/${product?.id}`)
+    }
+
+    const handleAddToCart = (event: any) => {
+        event.stopPropagation();
+        if (product) {
+            dispatch(addToCart({ ...product, quantity: 1 }));
+            setIsAddToCart(true);
+        }
+    };
+
+    const handleGoToCart = (event: any) => {
+        event.stopPropagation();
+        navigate(`/cart`)
+    }
+
     return (
-        <div className="p-4 flex flex-col items-center justify-between h-[400px] bg-white ">
+        <div onClick={handleCardClick}
+            className="p-4 flex flex-col items-center justify-between h-[400px] bg-white ">
             <img
                 src={product.image}
                 alt={product.title}
@@ -23,9 +59,16 @@ const ProductCard = ({ product }: any) => {
                     </span>
                 </div>
             </div>
-            <button className="px-4 py-2 bg-ashBrown text-white font-medium rounded-md w-full hover:bg-lightCopper">
-                Add To Cart
-            </button>
+            {isAddToCart ? (
+                <button onClick={handleGoToCart} className="px-4 py-2 bg-ashBrown text-white font-medium rounded-md w-full hover:bg-lightCopper">
+                    Go To Cart
+                </button>
+            ) : (
+                <button onClick={handleAddToCart} className="px-4 py-2 bg-ashBrown text-white font-medium rounded-md w-full hover:bg-lightCopper">
+                    Add To Cart
+                </button>
+            )}
+
         </div>
     );
 };
