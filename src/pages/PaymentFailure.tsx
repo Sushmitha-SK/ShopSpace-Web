@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearAddress } from '../store/slice/userSlice';
+import { useEffect } from 'react';
 
 const PaymentFailure = () => {
     const { orderId } = useParams();
@@ -8,6 +9,11 @@ const PaymentFailure = () => {
 
     const address = useAppSelector((state: any) => state?.user?.address);
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
 
     const handleRetryPayment = () => {
         dispatch(clearAddress());

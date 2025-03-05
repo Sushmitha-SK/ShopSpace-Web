@@ -11,7 +11,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
-
+import './App.css'
 
 function App() {
   return (

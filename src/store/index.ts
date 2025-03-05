@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action, createReducer } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import userReducer from './slice/userSlice'
 import productReducer from './slice/productsSlice'
 import cartReducer from './slice/cartSlice'

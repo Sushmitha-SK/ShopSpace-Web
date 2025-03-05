@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../store/hooks';
 import { clearCart, removeFromCart } from '../store/slice/cartSlice';
@@ -19,6 +19,10 @@ const Cart = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const handleClearCart = () => {
         dispatch(clearCart());
     };
@@ -30,6 +34,7 @@ const Cart = () => {
     const handleItemClick = (id: any) => {
         navigate(`/productdescription/${id}`);
     };
+
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -52,7 +57,7 @@ const Cart = () => {
                     </button>
                 </div>
 
-                <div className="cart-body p-6 max-w-3xl mx-auto">
+                <div className="cart-body p-6 max-w-3xl mx-auto border rounded-b-lg">
                     {cartCount === 0 ? (
                         <p className="text-gray-500 text-center">Your cart is empty.</p>
                     ) : (

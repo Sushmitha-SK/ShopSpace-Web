@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearAddress } from '../store/slice/userSlice';
+import { useEffect } from 'react';
 
 const PaymentSuccess = () => {
     const navigate = useNavigate();
@@ -8,6 +9,10 @@ const PaymentSuccess = () => {
 
     const dispatch = useAppDispatch();
     const address = useAppSelector((state: any) => state?.user?.address);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
 
     const handleClose = () => {

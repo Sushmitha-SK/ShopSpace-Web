@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Place Order
 export async function create_StripePaymentIntent(cartDetails: any, orderID: any) {
 
     const url = `https://transacthub.onrender.com/api/v1/payments/pay-session`;

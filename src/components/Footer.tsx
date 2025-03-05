@@ -1,18 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Images from '../assets/images'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  const navigate = useNavigate();
-
-  const handlePrivacyPolicy = () => {
-    navigate('/privacypolicy')
-  }
-
-  const handleTermsOfUSe = () => {
-    navigate('/termsofuse')
-  }
 
   return (
     <footer className="bg-ashBrown text-white py-10 px-5">

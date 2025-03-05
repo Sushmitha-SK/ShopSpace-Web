@@ -8,7 +8,10 @@ const Images = {
     carticon: require('./carticon.png'),
     logo: require('./logo.png'),
     searchicon: require('./searchicon.png'),
-    clearicon: require('./clearicon.png')
+    clearicon: require('./clearicon.png'),
+    hamburgericon: require('./hamburgericon.png'),
+    herobg: require('./herobg.png'),
+    herobgleft: require('./herobgleft.png')
 }
 
 export default Images;

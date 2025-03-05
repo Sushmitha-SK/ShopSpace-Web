@@ -1,11 +1,16 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const TermsOfUse = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <div>
-            <Header searchTerm={""} setSearchTerm={() => {}} />
+            <Header searchTerm={""} setSearchTerm={() => { }} />
             <div className="min-h-screen bg-white flex flex-col items-center p-4">
                 <div className="max-w-4xl w-full p-6">
                     <h1 className="text-3xl font-bold text-gray-800 mb-6">Terms of Use</h1>
