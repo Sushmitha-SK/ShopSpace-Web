@@ -2,6 +2,10 @@
 
 ShopSpace is a modern eCommerce website built with React and TypeScript, utilizing the FakeStore API for product data and integrated with the Stripe Payment Gateway for secure and efficient online transactions.
 
+## Deployed Application
+
+Check out the live version of the app here: [ShopSpace] (https://shop-space-ecommerce.vercel.app/)
+
 ## Setup Instructions
 
 1. Clone the repository:
