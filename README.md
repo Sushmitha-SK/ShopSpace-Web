@@ -4,7 +4,7 @@ ShopSpace is a modern eCommerce website built with React and TypeScript, utilizi
 
 ## Deployed Application
 
-Check out the live version of the app here: [ShopSpace] (https://shop-space-ecommerce.vercel.app/)
+Check out the live version of the app here: [ShopSpace](https://shop-space-ecommerce.vercel.app/)
 
 ## Setup Instructions
 
